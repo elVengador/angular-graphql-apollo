@@ -1,0 +1,5 @@
+generates:
+  ./src/app/schemas.ts:
+    schema: http://localhost:3000/graphql/
+    plugins:
+      - typescript

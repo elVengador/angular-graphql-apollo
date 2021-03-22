@@ -1,0 +1,58 @@
+<h1>List Users <small *ngIf="!users">Loading ...</small></h1>
+
+<div *ngIf="wasCreate" class="alert alert-success" role="alert">
+    User has been created
+</div>
+
+<form [formGroup]="form" class="py-5" (submit)="createUser()">
+    <div class="mb-3">
+        <input type="text" class="form-control" placeholder="id" formControlName="id"
+            >
+    </div>
+    <div class="mb-3">
+        <input type="text"
+               class="form-control"
+               placeholder="First Name"
+               formControlName="firstName"
+               [class.is-invalid] = "firstNameInvalido()">
+    </div>
+    <div class="mb-3">
+        <input type="text" 
+               class="form-control"
+               placeholder="Last Name"
+               formControlName="lastName"
+               [class.is-invalid] = "lastNameInvalido()">
+    </div>
+    <div class="mb-3">
+        <input type="number" 
+               class="form-control"
+               placeholder="Age"
+               formControlName="age"
+               [class.is-invalid] = "ageInvalido()">
+    </div>
+    <div class="d-flex justify-content-between">
+        <button class="btn btn-primary form-control" type="submit">Create</button>
+        <button (click)="updateUser()" class="btn btn-success form-control" type="button" [disabled] = "!form.controls.id.value">Update</button>
+        <button class="btn btn-warning form-control" type="reset">Reset</button>
+    </div>
+</form>
+
+
+<ng-container *ngIf="users">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div *ngFor="let user of users" class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{user.firstName}}</h5>
+                    <p class="card-text">{{user.lastName}}, {{user.firstName}} with {{user.age}} years</p>
+                    <p>{{user._id}}</p>
+                    <div class="d-flex justify-content-between">
+                        <button (click)="setData(user._id, user.firstName, user.lastName, user.age)" type="button" class="btn btn-success">Update</button>
+                        <button (click)="deleteUser(user._id)" type="button" class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
